@@ -76,13 +76,13 @@ module.exports = function (params) {
         callback(null, file);
     }
 
-    function processInclude(content, filePath, sourceMap, includedFiles) {
-        var matches = content.match(/^(\s+)?(\/\/|\/\*|\#|\<\!\-\-)(\s+)?=(\s+)?(include|require)(.+$)/mg);
-        var relativeBasePath = path.dirname(filePath);
-        
+    function processInclude(content, filePath, sourceMap, includedFiles) {       
         if (params.preprocessor) {
             content = params.preprocessor(content, { filePath: filePath, sourceMap: sourceMap });
         }
+
+        var matches = content.match(/^(\s+)?(\/\/|\/\*|\#|\<\!\-\-)(\s+)?=(\s+)?(include|require)(.+$)/mg);
+        var relativeBasePath = path.dirname(filePath);
 
         if (!matches) return {
             content: content,
