@@ -79,6 +79,10 @@ module.exports = function (params) {
     function processInclude(content, filePath, sourceMap, includedFiles) {
         var matches = content.match(/^(\s+)?(\/\/|\/\*|\#|\<\!\-\-)(\s+)?=(\s+)?(include|require)(.+$)/mg);
         var relativeBasePath = path.dirname(filePath);
+        
+        if (params.preprocessor) {
+            content = params.preprocessor(content, { filePath: filePath, sourceMap: sourceMap });
+        }
 
         if (!matches) return {
             content: content,
